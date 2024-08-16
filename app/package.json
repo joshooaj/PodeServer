@@ -1,0 +1,19 @@
+{
+    "name": "podeserver",
+    "version": "0.0.0",
+    "main": "./server.ps1",
+    "scripts": {
+        "start": "./server.ps1",
+        "install": "",
+        "test": "",
+        "build": ""
+    },
+    "dependencies": {
+    },
+    "modules": {},
+    "devModules": {
+        "pester": "latest"
+    },
+    "author": "Joshua Hendricks (joshooaj)",
+    "license": "MIT"
+}
