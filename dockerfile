@@ -11,8 +11,12 @@ LABEL version="${version}"
 
 WORKDIR /app
 
-SHELL [ "pwsh", "-NoLogo", "-NoProfile", "-Command" ]
-RUN Install-Module pode -Scope AllUsers -Force
+RUN \
+    apt-get update && apt-get upgrade -y && \
+    apt-get autoclean && \
+    apt-get autoremove && \
+    pwsh -c Install-Module pode -Scope AllUsers -Force
+
 ENTRYPOINT [ "pwsh", "-c", "pode" ]
 CMD [ "start" ]
 VOLUME [ "/app" ]
