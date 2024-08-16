@@ -38,4 +38,4 @@ jobs:
           build-args: |
             version=${{steps.nbgv.outputs.PODESERVER_VERSION}}
           push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/PodeServer:latest,${{ vars.DOCKERHUB_USERNAME }}/PodeServer:${{steps.nbgv.outputs.PODESERVER_VERSION}}
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/podeserver:latest,${{ vars.DOCKERHUB_USERNAME }}/podeserver:${{steps.nbgv.outputs.PODESERVER_VERSION}}
