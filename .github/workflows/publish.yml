@@ -3,6 +3,9 @@ name: Publish
 on:
   workflow_dispatch:
 
+env:
+  REGISTRY_IMAGE: ${{ vars.DOCKERHUB_USERNAME }}/podeserver
+
 jobs:
   docker:
     runs-on: ubuntu-latest
@@ -40,4 +43,6 @@ jobs:
           build-args: |
             version=${{steps.nbgv.outputs.PODESERVER_VERSION}}
           push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/podeserver:latest,${{ vars.DOCKERHUB_USERNAME }}/podeserver:${{steps.nbgv.outputs.PODESERVER_VERSION}}
+          tags: |
+            ${{ env.REGISTRY_IMAGE }}:latest
+            ${{ env.REGISTRY_IMAGE }}:${{steps.nbgv.outputs.PODESERVER_VERSION}}
