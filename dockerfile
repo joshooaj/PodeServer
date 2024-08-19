@@ -16,7 +16,6 @@ WORKDIR /app
 COPY app/ .
 RUN \
     apt-get update && \
-    apt-get upgrade -y && \
     apt-get install -y curl wget apt-transport-https software-properties-common  && \
     if [ "$TARGETPLATFORM" = "linux/amd64" ]; then PWSH_URL="https://github.com/PowerShell/PowerShell/releases/download/v7.4.4/powershell-7.4.4-linux-x64.tar.gz"; else PWSH_URL="https://github.com/PowerShell/PowerShell/releases/download/v7.4.4/powershell-7.4.4-linux-arm64.tar.gz"; fi && \
     curl -L -o /tmp/powershell.tar.gz "$PWSH_URL" && \
