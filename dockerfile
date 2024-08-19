@@ -1,5 +1,5 @@
 FROM --platform=$BUILDPLATFORM mcr.microsoft.com/powershell:7.4-debian-bookworm AS download
-RUN pwsh -c Install-Module pode -Scope AllUsers -Force
+RUN pwsh -c Install-Module Pode -RequiredVersion 2.10.1 -Scope AllUsers -Force
 
 FROM ubuntu:noble
 
@@ -17,7 +17,7 @@ LABEL version="${version}"
 
 WORKDIR /app
 COPY app/ .
-COPY --from=download /usr/local/share/powershell/Modules/Pode /user/local/share/powershell/Modules/Pode
+COPY --from=download /usr/local/share/powershell/Modules/Pode/ /usr/local/share/powershell/Modules/Pode
 RUN \
     apt-get update && \
     apt-get install -y curl wget apt-transport-https software-properties-common  && \
