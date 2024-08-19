@@ -1,3 +1,6 @@
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/powershell:7.4-debian-bookworm AS download
+RUN pwsh -c Install-Module pode -Scope AllUsers -Force
+
 FROM ubuntu:noble
 
 ARG version=0.1
@@ -14,6 +17,7 @@ LABEL version="${version}"
 
 WORKDIR /app
 COPY app/ .
+COPY --from=download /usr/local/share/powershell/Modules/Pode /user/local/share/powershell/Modules/Pode
 RUN \
     apt-get update && \
     apt-get install -y curl wget apt-transport-https software-properties-common  && \
@@ -23,8 +27,7 @@ RUN \
     tar zxf /tmp/powershell.tar.gz -C /opt/microsoft/powershell/7 && \
     rm /tmp/powershell.tar.gz && \
     chmod +x /opt/microsoft/powershell/7/pwsh && \
-    ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh && \
-    pwsh -c Install-Module pode -Scope AllUsers -Force
+    ln -s /opt/microsoft/powershell/7/pwsh /usr/bin/pwsh
 ENTRYPOINT [ "pwsh", "-c", "pode" ]
 CMD [ "start" ]
 VOLUME [ "/app" ]
