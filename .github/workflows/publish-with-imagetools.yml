@@ -1,4 +1,4 @@
-name: ci
+name: Publish with ImageTools
 
 on:
   workflow_dispatch:
@@ -48,7 +48,7 @@ jobs:
         shell: pwsh
         run: |
             dotnet tool restore
-            $version = (dotnet nbgv get-version -f json | ConvertFrom-Json
+            $version = (dotnet nbgv get-version -f json | ConvertFrom-Json).SimpleVersion
             "PODESERVER_VERSION=$version" | Set-Content $env:GITHUB_OUTPUT
 
       - name: Build and push by digest
