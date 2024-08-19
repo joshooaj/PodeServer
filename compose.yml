@@ -1,9 +1,9 @@
 services:
-  pode:
+  server:
     image: joshooaj/podeserver:${PODE_VERSION:-latest}
     build: .
     restart: unless-stopped
     volumes:
       - ./app:/app
     ports:
-      - "8000:80"
+      - 8000:80

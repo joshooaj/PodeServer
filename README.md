@@ -84,6 +84,9 @@ Start-PodeServer -Threads 2 {
 
 ## Docker Compose
 
+Create a `compose.yml` or `docker-compose.yml` file similar to the one below, and then run `docker compose up -d` in the
+same directory to start the application. You can check `stdout` for log messages and errors from Pode using `docker compose logs -f`.
+
 ```yaml
 services:
   server:
@@ -92,7 +95,7 @@ services:
     volumes:
       - ./app:/app
     ports:
-      - "8000:80"
+      - 8000:80
 ```
 
 ## Configuration Options
