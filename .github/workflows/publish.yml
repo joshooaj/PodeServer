@@ -28,21 +28,25 @@ jobs:
           username: ${{ vars.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Get next version
-        id: nbgv
+      - name: Build container images
         shell: pwsh
-        run: |
-            dotnet tool restore
-            $version = (dotnet nbgv get-version -f json | ConvertFrom-Json).SimpleVersion
-            "PODESERVER_VERSION=$version" | Set-Content $env:GITHUB_OUTPUT
+        run: ./build.ps1
+
+      # - name: Get next version
+      #   id: nbgv
+      #   shell: pwsh
+      #   run: |
+      #       dotnet tool restore
+      #       $version = (dotnet nbgv get-version -f json | ConvertFrom-Json).SimpleVersion
+      #       "PODESERVER_VERSION=$version" | Set-Content $env:GITHUB_OUTPUT
       
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          platforms: linux/amd64,linux/arm64
-          build-args: |
-            version=${{steps.nbgv.outputs.PODESERVER_VERSION}}
-          push: true
-          tags: |
-            ${{ env.REGISTRY_IMAGE }}:latest
-            ${{ env.REGISTRY_IMAGE }}:${{steps.nbgv.outputs.PODESERVER_VERSION}}
+      # - name: Build and push
+      #   uses: docker/build-push-action@v6
+      #   with:
+      #     platforms: linux/amd64,linux/arm64
+      #     build-args: |
+      #       version=${{steps.nbgv.outputs.PODESERVER_VERSION}}
+      #     push: true
+      #     tags: |
+      #       ${{ env.REGISTRY_IMAGE }}:latest
+      #       ${{ env.REGISTRY_IMAGE }}:${{steps.nbgv.outputs.PODESERVER_VERSION}}
